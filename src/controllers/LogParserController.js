@@ -10,8 +10,11 @@ class LogParserController {
   }
 
   newGame() {
+    const idx = this.games.length + 1;
+
     this.games.push({
       game: {
+        id: `game_${parseInt(idx, 10)}`,
         total_kills: 0,
         players: [],
         kills: {},
@@ -24,15 +27,17 @@ class LogParserController {
       /ClientUserinfoChanged: [0-9]* n\\(.*)\\t\\[0-9]+\\model/
     )[1];
 
-    if (
-      this.games[this.games.length - 1].game.players.indexOf(userName) === -1
-    ) {
-      this.games[this.games.length - 1].game.players.push(userName);
+    const { game } = this.getLastGame();
+
+    if (game.players.indexOf(userName) === -1) {
+      game.players.push(userName);
     }
   }
 
   newKill(content) {
-    this.games[this.games.length - 1].game.total_kills++;
+    const { game } = this.getLastGame();
+
+    game.total_kills++;
     const userName = content[5];
 
     if (userName === WORLD_USERNAME) {
@@ -55,8 +60,9 @@ class LogParserController {
       killed = `${killed} ${content[idx]}`;
     }
 
-    this.games[this.games.length - 1].game.kills[killed] =
-      this.games[this.games.length - 1].game.kills[killed] - 1 || -1;
+    const { game } = this.getLastGame();
+
+    game.kills[killed] = game.kills[killed] - 1 || -1;
   }
 
   newUserKill(user, content) {
@@ -67,8 +73,15 @@ class LogParserController {
       user = `${user} ${content[idx]}`;
     }
 
-    this.games[this.games.length - 1].game.kills[user] =
-      this.games[this.games.length - 1].game.kills[user] + 1 || 1;
+    const { game } = this.getLastGame();
+
+    game.kills[user] = game.kills[user] + 1 || 1;
+  }
+
+  getLastGame() {
+    const index = this.games.length;
+
+    return this.games[index - 1];
   }
 
   parse() {
@@ -93,7 +106,12 @@ class LogParserController {
       }
     });
 
-    return this.games;
+    const { games } = this;
+    if (games.length === 0) {
+      return { error: 'No game found on the logfile' };
+    }
+
+    return games;
   }
 }
 

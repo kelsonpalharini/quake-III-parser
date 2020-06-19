@@ -1,16 +1,20 @@
 {
-  "name": "project",
+  "name": "simple-quake-log-parser",
   "version": "1.0.0",
+  "author": "Kelson Palharini <kelsonpalharini@bsd.com.br>",
   "main": "src/server.js",
   "license": "MIT",
   "scripts": {
-    "dev": "nodemon"
+    "start": "node src/server.js",
+    "dev": "nodemon",
+    "test": "istanbul cover node_modules/jasmine/bin/jasmine.js"
   },
   "dependencies": {
     "body-parser": "^1.19.0",
     "cors": "^2.8.5",
     "express": "^4.17.1",
     "http-server": "^0.12.3",
+    "request": "^2.88.2",
     "xhr2": "^0.2.0"
   },
   "devDependencies": {
@@ -19,6 +23,8 @@
     "eslint-config-prettier": "^6.11.0",
     "eslint-plugin-import": "^2.21.2",
     "eslint-plugin-prettier": "^3.1.4",
+    "istanbul": "^0.4.5",
+    "jasmine": "^3.5.0",
     "nodemon": "^2.0.4",
     "prettier": "^2.0.5"
   }

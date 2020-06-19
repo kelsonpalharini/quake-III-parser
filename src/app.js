@@ -6,7 +6,7 @@ const path = require('path');
 
 const routes = require('./routes');
 
-const LogParserController = require('./controllers/logParserController');
+const LogParserController = require('./controllers/LogParserController');
 
 global.XMLHttpRequest = require('xhr2');
 
@@ -14,7 +14,7 @@ class App {
   constructor() {
     this.server = express();
 
-    global.logData = this.setData();
+    global.logData = this.getLogData();
 
     this.middlewares();
     this.routes();
@@ -30,7 +30,7 @@ class App {
     this.server.use(routes);
   }
 
-  setData() {
+  getLogData() {
     const fileContent = fs.readFileSync(
       path.resolve(__dirname, '../src/data/games.log'),
       {
