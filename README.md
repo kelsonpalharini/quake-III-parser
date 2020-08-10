@@ -72,7 +72,7 @@ E se nada acontecer de errado, você vai ter duas rotas prontas para acesso:
 
 - [Node.JS](https://nodejs.org/) - JavaScript runtime
 - [Express](https://expressjs.com/) - Rest Framework
-- [Jasmine](https://jasmine.github.io/) - Test Framework
+- [Jasmine](https://jasmine.github.io/) - JavaScript Testing Framework
 
 A aplicação seguiu o style guide de desenvolvimento da [AirBnB](https://github.com/airbnb/javascript)
 
